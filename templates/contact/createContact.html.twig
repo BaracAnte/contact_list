@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+
+{% block body %}
+	<h2>New</h2>
+	<div class="col-md-6">
+		{{ form_start(form) }}
+		{% if form.image.vars.data %}
+			<img class="profile_img" src="{{ asset('/uploads/' ~ form.image.vars.data) }}"/>
+		{% endif %}
+		<div class="form-group">
+			<label for="contact_image">Image</label>
+			<div class="custom-file"><input type="file" id="contact_image" name="contact[image]" class="custom-file-input" lang="en"><label for="contact_image" class="custom-file-label">{{form.image.vars.data}}</label>
+			</div>
+		</div>
+		{{ form_row(form.favorite) }}
+
+		{{ form_row(form.fullname) }}
+		{{ form_row(form.email) }}
+	</div>
+	<h4>Numbers</h4>
+	<div class="col-sm-8 col-sm-offset-2" id="phoneNumber_list" data-prototype="{{ form_widget(form.phoneNumber.vars.prototype)|e('html_attr') }}">
+		{% for row in form.phoneNumber %}
+			<div class="panel panel-warning form_row">
+				{{ form_row(row) }}
+			</div>
+		{% endfor %}
+	</div>
+	{{ form_row(form.save) }}
+	{{ form_end(form, {'render_rest': false}) }}
+{% endblock %}

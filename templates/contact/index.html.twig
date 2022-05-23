@@ -1,0 +1,94 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}All Contacts
+{% endblock %}
+
+{% block body %}
+	<style>
+		.example-wrapper {
+			margin: 5em;
+			max-width: 800px;
+			width: 95%;
+			font: 14px / 1.5 sans-serif;
+		}
+		.example-wrapper code {
+			background: #F5F5F5;
+			padding: 2px 6px;
+		}
+		.table {
+			color: #00CC66;
+		}
+		.img {
+			/* Vector */
+			position: static;
+			left: 0;
+			right: 0;
+			top: 0;
+			bottom: 0;
+			/* Inside auto layout */
+			flex: none;
+			order: 0;
+			flex-grow: 0;
+			margin: 0;
+		}
+		#keyupSearch {
+			padding: 6px;
+			margin-top: 8px;
+			font-size: 17px;
+			border: none;
+		}
+		#searchBtn {
+			padding: 6px 10px;
+			margin-top: 8px;
+			margin-right: -9px;
+			font-size: 17px;
+			border: none;
+			cursor: pointer;
+		}
+		tbody tr td:first-child {
+			width: 3em;
+		}
+	</style>
+
+	<div class="example-wrapper">
+
+		<i id="searchBtn" class="fa fa-search"></i>
+		<input id="keyupSearch" type="text" placeholder="Search.." data-favorite="{{ favorite }}">
+
+		<table id="contactTable" class="table table-striped">
+			<thead>
+				<tr>
+					<td colspan="5">Name</td>
+				</tr>
+			</thead>
+			<tbody>
+				{% for contact in contacts %}
+					<tr>
+						<td><img src="{{ '/uploads/' ~ contact.image }}" style="width: 40px;height: 40px;border-radius: 30px;"></td>
+						<td>{{ contact.fullname }}
+							<br>
+							{{ contact.email }}
+						</td>
+						<td>
+							{% if contact.favorite %}
+								<img src="/images/Favorite.png" class="img">
+							{% else %}
+								<img src="/images/NotFavorite.png" class="img">
+							{% endif %}
+						</td>
+						<td>
+							<a href="{{ path('addEdit', {id: contact.id}) }}">
+								Edit
+							</a>
+						</td>
+						<td>
+							<a onclick="return confirm('Are you sure to delete?')" href="{{ path('delete', {id: contact.id, favorite:favorite}) }}">
+								Delete
+							</a>
+						</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
+{% endblock %}
